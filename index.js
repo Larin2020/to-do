@@ -37,8 +37,17 @@ function updateHTML() {
 }
 function addItem() {
   let title = prompt("Введите заголовок");
+  while (!title || title === "") {
+    title = prompt("Введите заголовок");
+  }
   let desc = prompt("Введите описание");
+  while (!desc || desc === "") {
+    desc = prompt("Введите описание");
+  }
   let buttonText = prompt("Введите текст кнопки");
+  while (!buttonText || buttonText === "") {
+    buttonText = prompt("Введите текст кнопки");
+  }
   cards.push({ title: title, desc: desc, buttonText: buttonText });
   localStorage.setItem("cards", JSON.stringify(cards));
   updateHTML();
