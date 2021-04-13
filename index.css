@@ -1,3 +1,9 @@
+body {
+  background-size: cover;
+  height: 98vh;
+  background-position: center;
+  background-repeat: no-repeat;
+}
 .cards {
   display: grid;
   grid-template-columns: repeat(4, 1fr);

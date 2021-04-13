@@ -1,5 +1,6 @@
 let cardsElem = document.querySelector("#cards");
 let addItemButton = document.querySelector("#add-item");
+let addBackgroundInput = document.querySelector("#add-background");
 let cards = [
   // {
   //   title: "bmw",
@@ -13,6 +14,11 @@ let cards = [
 ];
 if (localStorage.getItem("cards")) {
   cards = JSON.parse(localStorage.getItem("cards"));
+}
+if (localStorage.getItem("background")) {
+  document.body.style.backgroundImage = `url(${localStorage.getItem(
+    "background"
+  )})`;
 }
 function cardTemplate(card, index) {
   return `
@@ -52,6 +58,27 @@ function addItem() {
   localStorage.setItem("cards", JSON.stringify(cards));
   updateHTML();
 }
+
+function changeBackground(file) {
+  if (file.size / 1024 / 1024 > 2) {
+    console.log(file);
+    alert("Размер файла слишком большой!!!");
+    return;
+  }
+  let reader = new FileReader();
+  reader.onload = function (e) {
+    document.body.style.backgroundImage = `url(${e.target.result})`;
+    localStorage.setItem("background", e.target.result);
+  };
+  reader.readAsDataURL(file);
+}
+
+function readURL(input) {
+  if (input.files && input.files[0]) {
+    changeBackground(input.files[0]);
+  }
+}
+
 function deleteItem(index) {
   cards.splice(index, 1);
   localStorage.setItem("cards", JSON.stringify(cards));
@@ -60,3 +87,7 @@ function deleteItem(index) {
 
 updateHTML();
 addItemButton.onclick = addItem;
+addBackgroundInput.onchange = function (e) {
+  readURL(e.target);
+  // console.log(e.target);
+};
